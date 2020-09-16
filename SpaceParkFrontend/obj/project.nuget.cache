@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "WVMsx8rYve3A0X9ax16tp4TMjpIdL9RToC4oxfZBe71sZa7XnPH8fUpIcf22r+QAN8Iotf7a4UYIp3CovYRCSA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\zigge\\source\\repos\\Spacepark-5\\SpaceParkFrontend\\SpaceParkFrontend.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\zigge\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.10.8\\microsoft.visualstudio.azure.containers.tools.targets.1.10.8.nupkg.sha512"
+  ],
+  "logs": []
+}
