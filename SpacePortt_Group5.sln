@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30406.217
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpacePortt_Group5", "SpacePortt_Group5\SpacePortt_Group5.csproj", "{90E76C9A-7504-4139-BD38-59DAA0F95743}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceportBackend", "SpaceportBackend\SpaceportBackend.csproj", "{EAF3A1B7-FEA9-46A6-9F85-B6D88BBCEFAA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{90E76C9A-7504-4139-BD38-59DAA0F95743}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90E76C9A-7504-4139-BD38-59DAA0F95743}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90E76C9A-7504-4139-BD38-59DAA0F95743}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90E76C9A-7504-4139-BD38-59DAA0F95743}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAF3A1B7-FEA9-46A6-9F85-B6D88BBCEFAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAF3A1B7-FEA9-46A6-9F85-B6D88BBCEFAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAF3A1B7-FEA9-46A6-9F85-B6D88BBCEFAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAF3A1B7-FEA9-46A6-9F85-B6D88BBCEFAA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {409EBC6E-1F5F-4D4F-9670-61E5586E3D34}
+	EndGlobalSection
+EndGlobal
