@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "1x+gj1IcNGT3Bm2b7Nsv3mpgdDqCwZNjRhPHnLyEbHW+Bk1/BCL/SzEYhWaES66WjbStx6rtxEzOsQ0yWMDjTQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Pontus\\Documents\\GitHub\\spacepark-grupp-5-spacepark\\SpaceParkProject\\SpaceParkFrontend\\SpaceParkFrontend.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Pontus\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.10.9\\microsoft.visualstudio.azure.containers.tools.targets.1.10.9.nupkg.sha512"
+  ],
+  "logs": []
+}
