@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using SpaceParkBackend.Database;
+
 
 namespace SpaceParkBackend
 {
@@ -18,6 +20,7 @@ namespace SpaceParkBackend
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            System.Globalization.CultureInfo.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
         }
 
         public IConfiguration Configuration { get; }
@@ -25,7 +28,13 @@ namespace SpaceParkBackend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddScoped<IParkingGuardRepository, ParkingGuardRepository>();
+            services.AddDbContext<SpaceparkContext>();
             services.AddControllers();
+
+            services.AddMvc(options => options.EnableEndpointRouting = false)
+                .SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +55,7 @@ namespace SpaceParkBackend
             {
                 endpoints.MapControllers();
             });
+            app.UseMvc();
         }
     }
 }

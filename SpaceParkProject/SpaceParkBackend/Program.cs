@@ -14,6 +14,7 @@ namespace SpaceParkBackend
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();
+            System.Globalization.CultureInfo.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace SpaceParkBackend.Models
 {
-    public class Spaceship
+    public class Starship
     {
-        public int SpaceshipID { get; set; }
-        public decimal Length { get; set; }
+        public int StarshipID { get; set; }
+        public int Length { get; set; }
         public string Name { get; set; }
 
     }

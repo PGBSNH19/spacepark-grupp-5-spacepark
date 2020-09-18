@@ -16,11 +16,12 @@ namespace SpaceParkBackend.Services
 
         public async Task<IRestResponse> GetPersonData(string name)
         {
-            var request = new RestRequest("people/?search=" + name, DataFormat.Json);
-            var response = client.ExecuteAsync<Person>(request);
+            var theName = Uri.EscapeUriString(name);
+            var request = new RestRequest($"people/?search={theName}", DataFormat.Json);
+            var response = client.ExecuteAsync<SwapiPersonResponse>(request);
 
             return await response;
-        }
+        }       
 
         public Person GetPerson(string name)
         {
@@ -43,23 +44,24 @@ namespace SpaceParkBackend.Services
             }
         }
 
-        public async Task<IRestResponse> GetSpaceshipData(string URL)
+        public async Task<IRestResponse> GetStarshipData(string URL)
         {
             var request = new RestRequest(URL, DataFormat.Json);
-            var response = client.ExecuteAsync<Spaceship>(request);
+            var response = client.ExecuteAsync<SwapiSpaceshipResponse>(request);
 
             return await response;
         }
-        public Spaceship GetStarship(string starShipURL)
+        public Starship GetStarship(string starShipURL)
         {
-            Spaceship spaceship = new Spaceship();
-            var response = GetSpaceshipData(starShipURL);
+            Starship starship = new Starship();
+            var response = GetStarshipData(starShipURL);
             var data = JsonConvert.DeserializeObject<SwapiSpaceshipResponse>(response.Result.Content);
 
-            spaceship.Name = data.Name;
-            spaceship.Length = Convert.ToDecimal(data.Length, CultureInfo.InvariantCulture);
+            starship.Name = data.Name;
+            starship.Length = Convert.ToInt32(data.Length);
 
-            return spaceship;
+            return starship;
         }
     }
 }
+
