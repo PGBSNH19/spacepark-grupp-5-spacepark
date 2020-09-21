@@ -14,19 +14,10 @@ namespace SpaceParkBackend.Controllers
     public class ParkingGuardController : ControllerBase
     {
         private readonly ILogger<ParkingGuardController> _logger;
-        private readonly IParkingGuardRepository ParkingGuard;
-        public ParkingGuardController(ILogger<ParkingGuardController> logger, IParkingGuardRepository parkingGuard)
+
+        public ParkingGuardController(ILogger<ParkingGuardController> logger)
         {
             _logger = logger;
-            ParkingGuard = parkingGuard;
-        }
-
-        [HttpGet]
-        public ActionResult<Parkinglot> Get(SpaceparkContext context)
-        {
-            var response = ParkingGuard.CheckOpenStatus(context);
-
-            return Ok(response);
         }
     }
 }

@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SpaceParkBackend.Database;
-
+using SpaceParkBackend.Repos;
 
 namespace SpaceParkBackend
 {
@@ -29,7 +29,6 @@ namespace SpaceParkBackend
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddScoped<IParkingGuardRepository, ParkingGuardRepository>();
             services.AddDbContext<SpaceparkContext>();
             services.AddControllers();
 
