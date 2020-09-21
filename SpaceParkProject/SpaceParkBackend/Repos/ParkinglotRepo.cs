@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace SpaceParkBackend.Repos
 {
@@ -15,11 +16,19 @@ namespace SpaceParkBackend.Repos
         public ParkinglotRepo(SpaceparkContext spaceparkContext, ILogger<ParkinglotRepo> logger) : base(spaceparkContext, logger)
         {}
 
-        public async Task<ICollection<Parkinglot>> GetParkingLots()
+        public async Task<IList<Parkinglot>> GetAvailableParkingLots()
         {
             _logger.LogInformation("Getting Parkinglots");
+            
+            var parkingSpaces = await _context.Parkinglots.Where(p => p.IsOccupied == false).ToListAsync();
 
-            //IQueryable<Parkinglot> query = 
+            if (parkingSpaces.Count < 1)
+            {
+                _logger.LogInformation("Its Full B*TCH (Shoot em Down)");
+                return parkingSpaces;
+            }
+
+            return parkingSpaces;
         }
     }
 }
