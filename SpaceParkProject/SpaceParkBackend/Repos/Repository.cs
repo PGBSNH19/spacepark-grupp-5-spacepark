@@ -8,36 +8,36 @@ using Microsoft.Extensions.Logging;
 using SpaceParkBackend.Models;
 using SpaceParkBackend.Database;
 
-namespace Social.API.Services
+namespace SpaceParkBackend.Repos
 {
-    public class Repository<T> : IRepository<T> where T : class
+    public class Repository : IRepository
     {
         protected readonly SpaceparkContext _context;
-        protected readonly ILogger<Repository<T>> _logger;
-        private DbSet<T> table = null;
-        public Repository(SpaceparkContext _context, ILogger<Repository<T>> logger)
+        protected readonly ILogger<Repository> _logger;
+       
+        public Repository(SpaceparkContext _context, ILogger<Repository> logger)
         {
             this._context = _context;
-            table = _context.Set<T>();
             _logger = logger;
         }
 
-        public async Task Add(T entity)
+        public async Task Add<T>(T entity) where T : class
         {
             _logger.LogInformation($"Adding object of type {entity.GetType()}");
-            await table.AddAsync(entity);
+            await _context.AddAsync(entity);
+            await Save();
         }
 
-        public void Update(T entity)
+        public void Update<T>(T entity) where T : class
         {
             _logger.LogInformation($"Updating object of type {entity.GetType()}");
             _context.Update(entity);
         }
 
-        public void Delete(T entity)
+        public void Delete<T>(T entity) where T : class
         {
             _logger.LogInformation($"Deleting object of type {entity.GetType()}");
-            table.Remove(entity);
+            _context.Remove(entity);
         }
 
         public async Task<bool> Save()

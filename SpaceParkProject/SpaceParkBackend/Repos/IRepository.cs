@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Social.API.Services
+namespace SpaceParkBackend.Repos
 {
-    public interface IRepository<T> where T : class
+    public interface IRepository
     {
-        Task Add(T entity);
-        void Update(T entity);
-        void Delete(T entity);
+        Task Add<T>(T entity) where T : class;
+        void Update<T>(T entity) where T : class;
+        void Delete<T>(T entity) where T : class;
         Task<bool> Save();
     }
 }
