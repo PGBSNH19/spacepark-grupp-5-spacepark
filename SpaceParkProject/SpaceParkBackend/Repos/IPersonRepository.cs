@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace SpaceParkBackend.Repos
 {
-    public interface IPersonRepository
+    public interface IPersonRepository : IRepository 
     {
-        Task<Person[]> GetAll();
+        Task<Person[]> GetAllVisitors();
     }
 }
