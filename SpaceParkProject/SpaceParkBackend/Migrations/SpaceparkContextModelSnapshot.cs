@@ -51,7 +51,7 @@ namespace SpaceParkBackend.Migrations
                             Cost = 500,
                             IsOccupied = true,
                             Length = 36,
-                            SpaceshipID = 1
+                            StarshipID = 1
                         });
                 });
 
@@ -81,7 +81,7 @@ namespace SpaceParkBackend.Migrations
                             PersonID = 1,
                             HasPaid = false,
                             Name = "Luke Skywalker",
-                            SpaceshipID = 1
+                            StarshipID = 1
                         });
                 });
 
@@ -100,12 +100,12 @@ namespace SpaceParkBackend.Migrations
 
                     b.HasKey("StarshipID");
 
-                    b.ToTable("Spaceships");
+                    b.ToTable("Starships");
 
                     b.HasData(
                         new
                         {
-                            SpaceshipID = 1,
+                            StarshipID = 1,
                             Length = 32,
                             Name = "Sand Crawler"
                         });

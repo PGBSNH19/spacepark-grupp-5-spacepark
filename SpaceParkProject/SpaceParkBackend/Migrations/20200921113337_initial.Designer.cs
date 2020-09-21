@@ -10,8 +10,8 @@ using SpaceParkBackend.Database;
 namespace SpaceParkBackend.Migrations
 {
     [DbContext(typeof(SpaceparkContext))]
-    [Migration("20200918090223_initialmigration")]
-    partial class initialmigration
+    [Migration("20200921113337_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -53,7 +53,7 @@ namespace SpaceParkBackend.Migrations
                             Cost = 500,
                             IsOccupied = true,
                             Length = 36,
-                            SpaceshipID = 1
+                            StarshipID = 1
                         });
                 });
 
@@ -83,7 +83,7 @@ namespace SpaceParkBackend.Migrations
                             PersonID = 1,
                             HasPaid = false,
                             Name = "Luke Skywalker",
-                            SpaceshipID = 1
+                            StarshipID = 1
                         });
                 });
 
@@ -102,12 +102,12 @@ namespace SpaceParkBackend.Migrations
 
                     b.HasKey("StarshipID");
 
-                    b.ToTable("Spaceships");
+                    b.ToTable("Starships");
 
                     b.HasData(
                         new
                         {
-                            SpaceshipID = 1,
+                            StarshipID = 1,
                             Length = 32,
                             Name = "Sand Crawler"
                         });

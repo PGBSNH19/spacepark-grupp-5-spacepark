@@ -2,7 +2,7 @@
 
 namespace SpaceParkBackend.Migrations
 {
-    public partial class initialmigration : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,7 @@ namespace SpaceParkBackend.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
                     HasPaid = table.Column<bool>(nullable: false),
-                    SpaceshipID = table.Column<int>(nullable: false)
+                    StarshipID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -22,17 +22,17 @@ namespace SpaceParkBackend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Spaceships",
+                name: "Starships",
                 columns: table => new
                 {
-                    SpaceshipID = table.Column<int>(nullable: false)
+                    StarshipID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Length = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Spaceships", x => x.SpaceshipID);
+                    table.PrimaryKey("PK_Starships", x => x.StarshipID);
                 });
 
             migrationBuilder.CreateTable(
@@ -44,15 +44,15 @@ namespace SpaceParkBackend.Migrations
                     Cost = table.Column<int>(nullable: false),
                     Length = table.Column<int>(nullable: false),
                     IsOccupied = table.Column<bool>(nullable: false),
-                    SpaceshipID = table.Column<int>(nullable: true)
+                    StarshipID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Parkinglots", x => x.ParkinglotID);
                     table.ForeignKey(
-                        name: "FK_Parkinglots_Spaceships_SpaceshipID",
-                        column: x => x.SpaceshipID,
-                        principalTable: "Spaceships",
+                        name: "FK_Parkinglots_Starships_StarshipID",
+                        column: x => x.StarshipID,
+                        principalTable: "Starships",
                         principalColumn: "StarshipID",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -63,7 +63,7 @@ namespace SpaceParkBackend.Migrations
                 values: new object[] { 1, false, "Luke Skywalker", 1 });
 
             migrationBuilder.InsertData(
-                table: "Spaceships",
+                table: "Starships",
                 columns: new[] { "StarshipID", "Length", "Name" },
                 values: new object[] { 1, 32, "Sand Crawler" });
 
@@ -73,7 +73,7 @@ namespace SpaceParkBackend.Migrations
                 values: new object[] { 1, 500, true, 36, 1 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Parkinglots_SpaceshipID",
+                name: "IX_Parkinglots_StarshipID",
                 table: "Parkinglots",
                 column: "StarshipID");
         }
@@ -87,7 +87,7 @@ namespace SpaceParkBackend.Migrations
                 name: "Persons");
 
             migrationBuilder.DropTable(
-                name: "Spaceships");
+                name: "Starships");
         }
     }
 }
