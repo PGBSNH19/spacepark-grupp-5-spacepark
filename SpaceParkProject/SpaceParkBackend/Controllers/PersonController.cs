@@ -23,7 +23,7 @@ namespace SpaceParkBackend.Controllers
         [HttpGet]
         public async Task<Person[]> GetAll()
         {
-            var results = await _repository.GetAll();
+            var results = await _repository.GetAllVisitors();
             return results;
         }
     }
