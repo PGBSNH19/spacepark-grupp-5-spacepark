@@ -14,7 +14,7 @@ namespace SpaceParkBackend.Services
 
         private static readonly RestClient client = new RestClient("https://swapi.dev/api/");
 
-        public async Task<IRestResponse> GetPersonData(string name)
+        public static async Task<IRestResponse> GetPersonData(string name)
         {
             var theName = Uri.EscapeUriString(name);
             var request = new RestRequest($"people/?search={theName}", DataFormat.Json);
@@ -23,7 +23,7 @@ namespace SpaceParkBackend.Services
             return await response;
         }       
 
-        public Person GetPerson(string name)
+        public static Person GetPerson(string name)
         {
             var dataResponse = GetPersonData(name);
             var data = JsonConvert.DeserializeObject<SwapiPersonResponse>(dataResponse.Result.Content);
