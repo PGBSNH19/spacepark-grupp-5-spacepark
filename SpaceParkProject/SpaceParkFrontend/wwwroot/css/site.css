@@ -12,13 +12,41 @@ a {
   color: #0366d6;
 }
 
+.button {
+  width: 150px;
+  margin: 10px;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 100%;
+  background-color: yellowgreen;
+}
+
 .btn-primary {
   color: #fff;
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
 
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+.titleText {
+  font-family: "Star Jedi", arial;
+  color: yellow;
+}
+
+.starwars-text {
+  font-family: "Star Jedi", arial;
+  color: yellow;
+}
+
+.container {
+  height: 100%;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
   color: #fff;
   background-color: #1b6ec2;
   border-color: #1861ac;
@@ -43,7 +71,7 @@ html {
 }
 
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
 }
 
 button.accept-policy {
@@ -61,6 +89,8 @@ html {
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
+  background-color: #000000;
+  font-family: "Star Jedi", arial;
 }
 .footer {
   position: absolute;
