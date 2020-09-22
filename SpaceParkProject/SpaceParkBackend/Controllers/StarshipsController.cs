@@ -1,16 +1,14 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using SpaceParkBackend.Models;
 using SpaceParkBackend.Repos;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace SpaceParkBackend.Controllers
 {
-    [Route("api/v1.0/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class StarshipsController : ControllerBase
     {
@@ -22,7 +20,7 @@ namespace SpaceParkBackend.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Starship>>> GetStarships()
+        public async Task<ActionResult<IList<Starship>>> GetStarships()
         {
             var results = await _starshipRepository.GetAllStarships();
             try
