@@ -11,8 +11,8 @@ namespace Spacepark.Tests
         [Fact]
         public void GetPerson_Test()
         {
-            APICaller api = new APICaller();
-            var person = api.GetPerson("Luke Skywalker");               
+                      
+            var person = APICaller.GetPerson("Luke Skywalker");               
 
             Assert.Equal("Luke Skywalker", person.Name);
         }
@@ -21,10 +21,17 @@ namespace Spacepark.Tests
         public void GetSpaceShip_Test()
         {
             APICaller api = new APICaller();                
-            var person = api.GetPerson("Luke Skywalker");         
+            var person = APICaller.GetPerson("Luke Skywalker");         
             var spaceship = api.GetStarship(person.Starships[1]);
                        
             Assert.Equal("Imperial shuttle", spaceship.Name);
+        }
+
+        [Fact]
+        public void PostPerson_Test()
+        {
+            
+
         }
 
 

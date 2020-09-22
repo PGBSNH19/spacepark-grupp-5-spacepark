@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using SpaceParkBackend.Controllers;
 
 namespace SpaceParkBackend.Repos
 {
@@ -29,6 +30,15 @@ namespace SpaceParkBackend.Repos
             }
 
             return parkingSpaces;
+        }
+
+        public async Task<Parkinglot> GetParkinglotById(int id)
+        {
+            _logger.LogInformation("Getting Parkinglot with specific ID");
+
+            var query = _context.Parkinglots.Where(i => i.ParkinglotID == id);
+            
+            return await query.FirstOrDefaultAsync();
         }
     }
 }
