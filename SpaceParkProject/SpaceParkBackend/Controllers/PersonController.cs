@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using SpaceParkBackend.Models;
 using SpaceParkBackend.Repos;
+using SpaceParkBackend.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace SpaceParkBackend.Controllers
@@ -12,7 +15,6 @@ namespace SpaceParkBackend.Controllers
     [ApiController]
     public class PersonController : ControllerBase
     {
-
         private readonly IPersonRepository _repository;
 
         public PersonController(IPersonRepository repository)
@@ -20,11 +22,102 @@ namespace SpaceParkBackend.Controllers
             _repository = repository;
         }
 
-        [HttpGet]
-        public async Task<Person[]> GetAll()
+        [HttpGet(Name = "GetAllPersons")]
+        public async Task<IList<Person>> GetAllPersons()
         {
-            var results = await _repository.GetAllVisitors();
+            var results = await _repository.GetAllPersons();
+
             return results;
+        }
+
+        [HttpGet]
+        public async Task<Person> GetPerson(int id)
+        {
+            var result = await _repository.GetPersonById(id);
+
+            return result;
+        }
+
+        [HttpPost(Name = "AddPerson")]
+        public async Task<ActionResult<Person>> PostPerson(Person person)
+        {
+            try
+            {
+                var existingPerson = APICaller.GetPerson(person.Name);
+
+                if (existingPerson != null)
+                {
+                    await _repository.Add(existingPerson);
+
+                    if (await _repository.Save())
+                    {
+                        return Created($"/Person/{existingPerson.PersonID }", new Person { PersonID = person.PersonID, Name = person.Name, StarshipID = person.StarshipID });
+                    }
+
+                    return BadRequest();
+                }
+
+                else
+                {
+                    return NoContent();
+                }
+            }
+
+            catch (Exception e)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Database failure {e.Message}");
+            }
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Person>> UpdatePerson(int id, Person person)
+        {
+            try
+            {
+                var personFromRepo = await _repository.GetPersonById(id);
+
+                if (personFromRepo == null)
+                {
+                    return NotFound($"Could not update Person. Person with id {id} was not found.");
+                }
+
+                var personToUpdate = new Person { PersonID = person.PersonID, HasPaid = person.HasPaid };
+                _repository.Update(personToUpdate);
+
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                var result = new { Status = StatusCodes.Status500InternalServerError, Data = $"Failed to update the person. Exception thrown when attempting to update data in the database: {e.Message}" };
+                return this.StatusCode(StatusCodes.Status500InternalServerError, result);
+            }                     
+        }
+
+        [HttpDelete("{id}", Name = "DeletePerson")]
+        public async Task<ActionResult> DeletePerson(int id)
+        {
+            try
+            {
+                var visitorToDelete = await _repository.GetPersonById(id);
+
+                if(visitorToDelete == null)
+                {
+                    return NotFound($"Could not find a person with the id {id}");
+                }
+
+                _repository.Delete(visitorToDelete);
+
+                if(await _repository.Save())
+                {
+                    return NoContent();
+                }
+            }
+            catch (Exception e)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Databases Failure: {e.Message}");
+            }
+
+            return BadRequest();
         }
     }
 }

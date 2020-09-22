@@ -8,6 +8,7 @@ namespace SpaceParkBackend.Repos
 {
     public interface IPersonRepository : IRepository 
     {
-        Task<Person[]> GetAllVisitors();
+        Task<IList<Person>> GetAllPersons();
+        Task<Person> GetPersonById(int id);
     }
 }

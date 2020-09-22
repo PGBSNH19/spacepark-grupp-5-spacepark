@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaceParkFrontend", "SpaceP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaceParkBackend", "SpaceParkBackend\SpaceParkBackend.csproj", "{9858F86B-850A-49F3-9ED5-3D7C76C1BEC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpacePark.Tests", "SpacePark.Tests\SpacePark.Tests.csproj", "{046432E0-5E42-4E1A-B2ED-656B3689ACFC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpacePark.Tests", "SpacePark.Tests\SpacePark.Tests.csproj", "{046432E0-5E42-4E1A-B2ED-656B3689ACFC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
