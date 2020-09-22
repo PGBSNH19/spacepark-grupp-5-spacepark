@@ -10,6 +10,6 @@ namespace SpaceParkBackend.Repos
     public interface IParkinglotRepo : IRepository
     {
         Task<IList<Parkinglot>> GetAvailableParkingLots();
-
+        Task<Parkinglot> GetParkinglotById(int id);
     }
 }
