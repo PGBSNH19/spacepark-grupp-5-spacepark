@@ -12,7 +12,7 @@
     "IIS Express": {
         "commandName": "IISExpress",
         "launchBrowser": true,
-        "launchUrl": "parkingguard",
+        "launchUrl": "person",
         "environmentVariables": {
             "SettingsEnviroment": "dev",
             "ASPNETCORE_ENVIRONMENT": "Development"
@@ -21,7 +21,7 @@
     "SpaceParkBackend": {
         "commandName": "Project",
         "launchBrowser": true,
-        "launchUrl": "parkingguard",
+        "launchUrl": "person",
         "environmentVariables": {
             "ASPNETCORE_ENVIRONMENT": "Development"
         },
@@ -30,7 +30,7 @@
     "Docker": {
       "commandName": "Docker",
       "launchBrowser": true,
-      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/parkingguard",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/person",
       "publishAllPorts": true,
       "useSSL": true
     }

@@ -54,15 +54,46 @@
 // });
 
 
-var inputN = $("#visitorName").val(); 
-$(document).ready(function(){
-    $("#postInfo").click(function(){
-      $.post("https://localhost:44328/person",
-      {
-        Name: inputN
-      },
-      function(data,status){
-        alert("Data: " + data + "\nStatus: " + status);
-      });
+// var inputN = $("#visitorName").val(); 
+
+// $(document).ready(function(){
+   
+//     $("#postInfo").click(function(){
+
+//         console.log($("#visitorName").val());
+//         $.postJSON = function(callback) {
+//             return jQuery.ajax({
+//             headers: { 
+//                 'Accept': 'application/json',
+//                 'Content-Type': 'application/json' 
+//             },
+//             'type': 'POST',
+//             'url': 'https://localhost:44328/person',
+//             'data': { 'name' : $("#visitorName").val()},
+//             'dataType': 'json',
+//             'success': callback            
+//             });          
+//         };           
+//     });
+//   });
+
+$("#postInfo").click(function(){
+
+    $.ajax({
+        url : "https://localhost:44328/person",
+        data: JSON.stringify({
+            Name : $("#visitorName").val(),
+        }),
+        type: "POST",
+        contentType: "application/json; charset=utf-8"
+    }).done(function(response, statusText, xhr) {
+        if(xhr.status == 200) {
+            console.log(statusText + ". Hello " + response.Name);
+            successMessage += "";
+            
+        }
+    }).fail(function(){
+       console.log("error");
     });
-  });
+
+});
