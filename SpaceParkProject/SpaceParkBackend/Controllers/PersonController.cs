@@ -30,7 +30,7 @@ namespace SpaceParkBackend.Controllers
             return results;
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public async Task<Person> GetPerson(int id)
         {
             var result = await _repository.GetPersonById(id);
@@ -43,15 +43,15 @@ namespace SpaceParkBackend.Controllers
         {
             try
             {
-                var existingPerson = APICaller.GetPerson(person.Name);
+                var validatedPerson = APICaller.GetPerson(person.Name);
 
-                if (existingPerson != null)
+                if (validatedPerson != null)
                 {
-                    await _repository.Add(existingPerson);
+                    await _repository.Add(validatedPerson);
 
                     if (await _repository.Save())
                     {
-                        return Created($"/Person/{existingPerson.PersonID }", new Person { PersonID = person.PersonID, Name = person.Name, StarshipID = person.StarshipID });
+                        return Created($"/Person/{validatedPerson.PersonID }", new Person { Name = validatedPerson.Name, HasPaid = false, StarshipID = validatedPerson.StarshipID });
                     }
 
                     return BadRequest();

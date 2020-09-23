@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 
 namespace SpaceParkBackend.Controllers
 {
+    [Route("[controller]")]
+    [ApiController]
     public class ParkinglotController : ControllerBase
     {
         private readonly IParkinglotRepo _parkinglotRepo;
