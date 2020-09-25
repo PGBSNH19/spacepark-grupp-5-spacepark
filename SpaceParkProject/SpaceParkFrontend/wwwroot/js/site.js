@@ -3,66 +3,48 @@
 
 // Write your Javascript code.
 
-// //document.getElementById("new-todo").onkeydown = function(pressEnter){
-    
-//     if(pressEnter.keyCode === 13){
-//         let response = document.getElementById("new-todo").value;      
-     
-//        todos.push(response);
-//        localStorage.setItem("theTodos", JSON.stringify(todos));
-//       // console.log(localStorage.getItem("theTodos"));
-        
-       
-//        printStuff();
-            
-//         //resets input after pressing enter so it is empty
-//         pressEnter.preventDefault();
-//         $(this).val('');
-//         return false;
-       
-        
-//     }
-// };//
-
-// document.getElementById("input-data").onclick = function(){
-   
-//     let response = document.getElementById("fname").value; 
-//     console.log(response);
-
-// }
-
-
-// // Attach a submit handler to the form
-// $( "#visitorForm" ).submit(function( event ) {
- 
-//   // Stop form from submitting normally
-//   event.preventDefault();
- 
-//   // Get some values from elements on the page:
-//   var $form = $( this ),
-//     term = $form.find( "input[name='s']" ).val(),
-//     url = $form.attr( "action" );
- 
-//   // Send the data using post
-//   var posting = $.post( url, { s: term } );
- 
-//   // Put the results in a div
-//   posting.done(function( data ) {
-//     var content = $( data ).find( "#content" );
-//     $( "#result" ).empty().append( content );
-//   });
-// });
-
-
-var inputN = $("#visitorName").val(); 
-$(document).ready(function(){
-    $("#postInfo").click(function(){
-      $.post("https://localhost:44328/person",
-      {
-        Name: inputN
+$(document).ready(function () {
+  $("#postInfo").click(async function () {
+    var inputName = $("#visitorName").val();
+    $.ajax("https://localhost:5001/person", {
+      data: JSON.stringify({
+        Name: inputName,
+      }),
+      method: "POST",
+      contentType: "application/json",
+      success: function (results) {
+        alert("Welcome to the SpacePark, my dear " + results.name + ".");
       },
-      function(data,status){
-        alert("Data: " + data + "\nStatus: " + status);
-      });
     });
   });
+});
+
+$(document).ready(function () {
+  $("#deleteInfo").click(async function () {
+    var inputName = $("#leavingVisitorName").val();
+    $.ajax("https://localhost:5001/person", {
+      data: JSON.stringify({
+        Name: inputName,
+      }),
+      method: "GET",
+      contentType: "application/json",
+      success: function (results) {
+        results.forEach((element) => {
+          if (element.name == inputName) {
+            deletePerson(element.personID);
+          }
+        });
+      },
+    });
+  });
+});
+
+function deletePerson(personID) {
+  $.ajax("https://localhost:5001/person/" + personID, {
+    method: "DELETE",
+    contentType: "application/json",
+    success: function (results) {
+      alert("Thank you, come again!");
+    },
+  });
+}
