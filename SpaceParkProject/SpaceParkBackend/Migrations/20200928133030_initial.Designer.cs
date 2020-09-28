@@ -10,7 +10,7 @@ using SpaceParkBackend.Database;
 namespace SpaceParkBackend.Migrations
 {
     [DbContext(typeof(SpaceparkContext))]
-    [Migration("20200928124723_initial")]
+    [Migration("20200928133030_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -100,9 +100,6 @@ namespace SpaceParkBackend.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StarshipName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PersonID");

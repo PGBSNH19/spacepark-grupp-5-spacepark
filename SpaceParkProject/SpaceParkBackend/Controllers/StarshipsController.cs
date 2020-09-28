@@ -67,10 +67,16 @@ namespace SpaceParkBackend.Controllers
             try
             {
                 await _starshipRepository.Add(starship);
-                await _starshipRepository.Save();
 
-                return CreatedAtAction("GetStarship", new { id = starship.StarshipID }, starship);
+                if(await _starshipRepository.Save())
+                {
+                    return Created($"/Starship/{starship.StarshipID}", new Starship { StarshipID = starship.StarshipID, Name = starship.Name, Length = starship.Length });
+                }
+
+                return BadRequest();
+          
             }
+
             catch (Exception exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Database Failure: {exception.Message}");

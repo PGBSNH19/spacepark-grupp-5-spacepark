@@ -100,9 +100,6 @@ namespace SpaceParkBackend.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("StarshipName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("PersonID");
 
                     b.ToTable("Persons");

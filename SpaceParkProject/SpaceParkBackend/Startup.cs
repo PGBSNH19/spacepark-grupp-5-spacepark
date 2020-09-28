@@ -30,6 +30,7 @@ namespace SpaceParkBackend
         {
             services.AddScoped<IParkinglotRepo, ParkinglotRepo>();
             services.AddScoped<IPersonRepository, PersonRepository>();
+            services.AddScoped<IStarshipRepository, StarshipRepository>();
             services.AddDbContext<SpaceparkContext>();
             services.AddControllers();
             services.AddCors(c =>

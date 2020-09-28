@@ -52,27 +52,34 @@ function deletePerson(personID) {
 
 function showBooking(person){
 
-  $.ajax("https://localhost:44328/parkinglot", {
-    data: JSON.stringify({
-      Name: person.starshipName,
-    }),
-    method: "PUT",
-    contentType: "application/json",
-    success: function (results) {
-      alert("Welcome to the SpacePark, my dear " + results.name + ".");
-      
-      $.ajax("https://localhost:44328/starship", {
+  $.ajax("https://localhost:44328/starships", {
       data: JSON.stringify({
-        Name: results.starshipName,        
+        Name: person.starship.name,   
+        Length: person.starship.length     
       }),
       method: "POST",
       contentType: "application/json",
       success: function (result){
         alert("you're in" + result.name);
-      }
-      });
+        
+        $.ajax("https://localhost:44328/parkinglot/" + 1, {
+        data: JSON.stringify({
+        IsOccupied: true,
+        StarshipID : result.starshipID,
+        starship: result
+        }),
+        method: "PUT",
+        contentType: "application/json",
+        success: function (results) {
+       alert("You have the parkinglot with id " + results.ParkinglotID + ".");
+      
+      
     },
 
   });
+      }
+      });
+
+  
 
 }

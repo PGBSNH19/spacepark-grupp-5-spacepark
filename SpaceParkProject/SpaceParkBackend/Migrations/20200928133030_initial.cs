@@ -29,8 +29,7 @@ namespace SpaceParkBackend.Migrations
                     PersonID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
-                    HasPaid = table.Column<bool>(nullable: false),
-                    StarshipName = table.Column<string>(nullable: true)
+                    HasPaid = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
