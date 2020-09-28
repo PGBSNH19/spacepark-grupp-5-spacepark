@@ -19,10 +19,9 @@ namespace Spacepark.Tests
 
         [Fact]
         public void GetSpaceShip_Test()
-        {
-            APICaller api = new APICaller();                
+        {               
             var person = APICaller.GetPerson("Luke Skywalker");         
-            var spaceship = api.GetStarship(person.Starships[1]);
+            var spaceship = APICaller.GetStarship(person.Starships[1]);
                        
             Assert.Equal("Imperial shuttle", spaceship.Name);
         }

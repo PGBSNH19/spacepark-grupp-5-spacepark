@@ -32,6 +32,10 @@ namespace SpaceParkBackend
             services.AddScoped<IPersonRepository, PersonRepository>();
             services.AddDbContext<SpaceparkContext>();
             services.AddControllers();
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+            });
 
             services.AddMvc(options => options.EnableEndpointRouting = false)
                 .SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
@@ -44,6 +48,7 @@ namespace SpaceParkBackend
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors(options => options.AllowAnyOrigin());
 
             app.UseHttpsRedirection();
 

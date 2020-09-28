@@ -44,14 +44,20 @@ namespace SpaceParkBackend.Controllers
             try
             {
                 var validatedPerson = APICaller.GetPerson(person.Name);
+                var validatedStarship = new Starship();                                           
 
                 if (validatedPerson != null)
                 {
+                    if (validatedPerson.Starships != null)
+                    {
+                        validatedStarship = APICaller.GetStarship(validatedPerson.Starships[0]);
+                    }
+
                     await _repository.Add(validatedPerson);
 
                     if (await _repository.Save())
                     {
-                        return Created($"/Person/{validatedPerson.PersonID }", new Person { Name = validatedPerson.Name, HasPaid = false, StarshipID = validatedPerson.StarshipID });
+                        return Created($"/Person/{validatedPerson.PersonID }", new Person { Name = validatedPerson.Name, HasPaid = false, StarshipID = validatedStarship.StarshipID });
                     }
 
                     return BadRequest();
