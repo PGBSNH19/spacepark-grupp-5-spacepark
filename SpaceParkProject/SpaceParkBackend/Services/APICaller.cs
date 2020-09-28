@@ -35,6 +35,7 @@ namespace SpaceParkBackend.Services
 
             else if (data.Results[0].Name == name)
             {
+              
                 return data.Results[0];
             }
 
@@ -44,21 +45,24 @@ namespace SpaceParkBackend.Services
             }
         }
 
-        public async Task<IRestResponse> GetStarshipData(string URL)
+        public static async Task<IRestResponse> GetStarshipData(string URL)
         {
             var request = new RestRequest(URL, DataFormat.Json);
             var response = client.ExecuteAsync<SwapiSpaceshipResponse>(request);
 
             return await response;
         }
-        public Starship GetStarship(string starShipURL)
+        public static Starship GetStarship(string starShipURL)
         {
             Starship starship = new Starship();
             var response = GetStarshipData(starShipURL);
             var data = JsonConvert.DeserializeObject<SwapiSpaceshipResponse>(response.Result.Content);
 
+            string convert = data.Length;
+            string toNumber = convert.Split('.')[0].Trim();
+            starship.StarshipID = data.ID;
             starship.Name = data.Name;
-            starship.Length = Convert.ToInt32(data.Length);
+            starship.Length = Convert.ToInt32(toNumber);
 
             return starship;
         }
