@@ -14,9 +14,9 @@ $(document).ready(function () {
       contentType: "application/json",
       success: function (results) {
         alert("Welcome to the SpacePark, my dear " + results.name + ".");
-      },
+        showBooking(results);
+      }                 
     });
-    //showBooking(results);
   });
 });
 
@@ -51,5 +51,28 @@ function deletePerson(personID) {
 }
 
 function showBooking(person){
+
+  $.ajax("https://localhost:44328/parkinglot", {
+    data: JSON.stringify({
+      Name: person.starshipName,
+    }),
+    method: "PUT",
+    contentType: "application/json",
+    success: function (results) {
+      alert("Welcome to the SpacePark, my dear " + results.name + ".");
+      
+      $.ajax("https://localhost:44328/starship", {
+      data: JSON.stringify({
+        Name: results.starshipName,        
+      }),
+      method: "POST",
+      contentType: "application/json",
+      success: function (result){
+        alert("you're in" + result.name);
+      }
+      });
+    },
+
+  });
 
 }

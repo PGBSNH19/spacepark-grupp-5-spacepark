@@ -57,7 +57,7 @@ namespace SpaceParkBackend.Controllers
 
                     if (await _repository.Save())
                     {
-                        return Created($"/Person/{validatedPerson.PersonID }", new Person { Name = validatedPerson.Name, HasPaid = false, StarshipID = validatedStarship.StarshipID });
+                        return Created($"/Person/{validatedPerson.PersonID }", new Person { Name = validatedPerson.Name, HasPaid = false, StarshipName = validatedStarship.Name });
                     }
 
                     return BadRequest();

@@ -11,7 +11,7 @@ namespace SpaceParkBackend.Models
         public int PersonID { get; set; }
         public string Name { get; set; }
         public bool HasPaid { get; set; }
-        public int StarshipID { get; set; }
+        public string StarshipName { get; set; }
         [NotMapped]
         public List<string> Starships { get; set; }
     }
