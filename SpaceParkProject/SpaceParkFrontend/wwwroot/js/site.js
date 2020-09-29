@@ -3,18 +3,21 @@
 
 // Write your Javascript code.
 
+var url = "http://localhost:5001/";
+
 $(document).ready(function () {
   $("#postInfo").click(async function () {
     var inputName = $("#visitorName").val();
-    $.ajax("https://localhost:44328/person", {
+    $.ajax(url + "person", {
       data: JSON.stringify({
-        Name: inputName,
+        Name: inputName
       }),
       method: "POST",
       contentType: "application/json",
       success: function (results) {
         alert("Welcome to the SpacePark, my dear " + results.name + ".");
         showBooking(results);
+
       }                 
     });
   });
@@ -23,7 +26,7 @@ $(document).ready(function () {
 $(document).ready(function () {
   $("#deleteInfo").click(async function () {
     var inputName = $("#leavingVisitorName").val();
-    $.ajax("https://localhost:44328/person", {
+    $.ajax(url + "person", {
       data: JSON.stringify({
         Name: inputName,
       }),
@@ -32,7 +35,7 @@ $(document).ready(function () {
       success: function (results) {
         results.forEach((element) => {
           if (element.name == inputName) {
-            deletePerson(element.personID);
+            deletePerson(element, element.personID);
           }
         });
       },
@@ -40,32 +43,68 @@ $(document).ready(function () {
   });
 });
 
-function deletePerson(personID) {
-  $.ajax("https://localhost:44328/person" + personID, {
+function deletePerson(person, personID) {
+  $.ajax(url + "person/" + personID, {
     method: "DELETE",
     contentType: "application/json",
     success: function (results) {
-      alert("Thank you, come again!");
-    },
-  });
+      alert("Thank you, come again!" + person);
+
+      $.ajax(url + "parkinglot/" + 4, {
+        data: JSON.stringify({
+        IsOccupied: false,
+        starship: person.starship
+        }),
+        method: "PUT",
+        contentType: "application/json",
+        success: function (results) {
+        alert("check mark" + person);  
+       
+       $.ajax(url + "starships/" + person.starshipID, {
+        method: "DELETE",
+        contentType: "application/json",
+        success: function (result) {
+       alert("You" + person.name + " have left with your starship with ID " + person.starshipID + ".");  
+       
+       
+  }});
+       
+  }});
+}});
+}
+
+function updatePerson(person, starship){
+  $.ajax(url + "person/" + person.personID, 
+  {
+    data: JSON.stringify({
+    starshipID: starship.starshipID
+    }),
+    method: "PUT",
+    contentType: "application/json",
+    success: function (results) {
+    alert("check mark " + starship.starshipID + " " + person);  
+  }
+});
+
 }
 
 function showBooking(person){
 
-  $.ajax("https://localhost:44328/starships", {
+  $.ajax(url + "starships", {
       data: JSON.stringify({
+        starshipID: person.starship.starshipID,
         Name: person.starship.name,   
-        Length: person.starship.length     
+        Length: person.starship.length,     
       }),
       method: "POST",
       contentType: "application/json",
       success: function (result){
-        alert("you're in" + result.name);
+        alert("you're in " + result.starshipID + " " + result.name);
+        updatePerson(person, result);
         
-        $.ajax("https://localhost:44328/parkinglot/" + 1, {
+        $.ajax(url + "parkinglot/" + 4, {
         data: JSON.stringify({
         IsOccupied: true,
-        StarshipID : result.starshipID,
         starship: result
         }),
         method: "PUT",
@@ -77,8 +116,8 @@ function showBooking(person){
     },
 
   });
-      }
-      });
+  }
+  });
 
   
 

@@ -60,12 +60,19 @@ namespace SpaceParkBackend.Controllers
                     return NotFound($"There is no parkinglot with the ID : {parkinglotID}");
                 }
 
-                existingParkinglot.IsOccupied = true;
-                existingParkinglot.Starship = starship;
-                existingParkinglot.StarshipID = starship.StarshipID;
+                if(existingParkinglot.IsOccupied == true)
+                {
+                    existingParkinglot.IsOccupied = false;                  
+                    existingParkinglot.Starship = null;
+                }
+                else
+                {
+                    existingParkinglot.IsOccupied = true;
+                    existingParkinglot.Starship = starship;                    
+                }
+                                
                 _parkinglotRepo.Update(existingParkinglot);
                 
-
                 if(await _parkinglotRepo.Save())
                 {
                     return NoContent();

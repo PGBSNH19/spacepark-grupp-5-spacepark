@@ -58,9 +58,9 @@ namespace SpaceParkBackend.Services
             var response = GetStarshipData(starShipURL);
             var data = JsonConvert.DeserializeObject<SwapiSpaceshipResponse>(response.Result.Content);
 
-            string convert = data.Length;
-            string toNumber = convert.Split('.')[0].Trim();
             starship.StarshipID = data.ID;
+            string convert = data.Length;
+            string toNumber = convert.Split('.')[0].Trim();           
             starship.Name = data.Name;
             starship.Length = Convert.ToInt32(toNumber);
 

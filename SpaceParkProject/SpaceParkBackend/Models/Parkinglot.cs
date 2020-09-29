@@ -14,8 +14,6 @@ namespace SpaceParkBackend.Models
         public int Cost { get; set; }
         public int Length { get; set; }
         public bool IsOccupied { get; set; }
-        public int? StarshipID { get; set; }
-        [NotMapped]
         public Starship Starship { get; set; }
         
     }

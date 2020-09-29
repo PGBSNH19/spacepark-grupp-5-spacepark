@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SpaceParkBackend.Database;
 
 namespace SpaceParkBackend.Migrations
 {
     [DbContext(typeof(SpaceparkContext))]
-    partial class SpaceparkContextModelSnapshot : ModelSnapshot
+    [Migration("20200929082508_intial")]
+    partial class intial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,6 +35,9 @@ namespace SpaceParkBackend.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("Length")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("StarshipID")
                         .HasColumnType("int");
 
                     b.HasKey("ParkinglotID");
@@ -97,12 +102,7 @@ namespace SpaceParkBackend.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("StarshipID")
-                        .HasColumnType("int");
-
                     b.HasKey("PersonID");
-
-                    b.HasIndex("StarshipID");
 
                     b.ToTable("Persons");
                 });
@@ -120,30 +120,9 @@ namespace SpaceParkBackend.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ParkinglotID")
-                        .HasColumnType("int");
-
                     b.HasKey("StarshipID");
 
-                    b.HasIndex("ParkinglotID")
-                        .IsUnique()
-                        .HasFilter("[ParkinglotID] IS NOT NULL");
-
                     b.ToTable("Starships");
-                });
-
-            modelBuilder.Entity("SpaceParkBackend.Models.Person", b =>
-                {
-                    b.HasOne("SpaceParkBackend.Models.Starship", "Starship")
-                        .WithMany()
-                        .HasForeignKey("StarshipID");
-                });
-
-            modelBuilder.Entity("SpaceParkBackend.Models.Starship", b =>
-                {
-                    b.HasOne("SpaceParkBackend.Models.Parkinglot", null)
-                        .WithOne("Starship")
-                        .HasForeignKey("SpaceParkBackend.Models.Starship", "ParkinglotID");
                 });
 #pragma warning restore 612, 618
         }

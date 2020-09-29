@@ -10,8 +10,8 @@ using SpaceParkBackend.Database;
 namespace SpaceParkBackend.Migrations
 {
     [DbContext(typeof(SpaceparkContext))]
-    [Migration("20200928133030_initial")]
-    partial class initial
+    [Migration("20200929090509_addedPropertyinParkinlot")]
+    partial class addedPropertyinParkinlot
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,9 +35,6 @@ namespace SpaceParkBackend.Migrations
                         .HasColumnType("bit");
 
                     b.Property<int>("Length")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("StarshipID")
                         .HasColumnType("int");
 
                     b.HasKey("ParkinglotID");
@@ -119,6 +116,9 @@ namespace SpaceParkBackend.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ParkinglotID")
+                        .HasColumnType("int");
 
                     b.HasKey("StarshipID");
 

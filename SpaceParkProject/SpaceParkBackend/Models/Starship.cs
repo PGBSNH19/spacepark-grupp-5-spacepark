@@ -10,6 +10,7 @@ namespace SpaceParkBackend.Models
         public int StarshipID { get; set; }
         public int Length { get; set; }
         public string Name { get; set; }
+        public int? ParkinglotID { get; set; }
 
     }
 }
