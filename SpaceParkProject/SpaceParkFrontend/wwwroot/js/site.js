@@ -8,6 +8,7 @@ var url = "http://localhost:5001/";
 $(document).ready(function () {
   $("#postInfo").click(async function () {
     var inputName = $("#visitorName").val();
+    
     $.ajax(url + "person", {
       data: JSON.stringify({
         Name: inputName
@@ -26,6 +27,7 @@ $(document).ready(function () {
 $(document).ready(function () {
   $("#deleteInfo").click(async function () {
     var inputName = $("#leavingVisitorName").val();
+    
     $.ajax(url + "person", {
       data: JSON.stringify({
         Name: inputName,
@@ -50,17 +52,16 @@ function deletePerson(person, personID) {
     success: function (results) {
       alert("Thank you, come again!" + person);
 
-      $.ajax(url + "parkinglot/" + 4, {
+      $.ajax(url + "parkinglot/" + 5, {
         data: JSON.stringify({
-        IsOccupied: false,
-        starship: person.starship
+        IsOccupied: false
         }),
         method: "PUT",
         contentType: "application/json",
         success: function (results) {
         alert("check mark" + person);  
        
-       $.ajax(url + "starships/" + person.starshipID, {
+       $.ajax(url + "starships/" + person.starship.starshipID, {
         method: "DELETE",
         contentType: "application/json",
         success: function (result) {
@@ -77,12 +78,12 @@ function updatePerson(person, starship){
   $.ajax(url + "person/" + person.personID, 
   {
     data: JSON.stringify({
-    starshipID: starship.starshipID
+    starship: starship
     }),
     method: "PUT",
     contentType: "application/json",
-    success: function (results) {
-    alert("check mark " + starship.starshipID + " " + person);  
+      success: function (results) {
+      alert("check mark " + starship.starshipID + " " + person);  
   }
 });
 
@@ -92,7 +93,6 @@ function showBooking(person){
 
   $.ajax(url + "starships", {
       data: JSON.stringify({
-        starshipID: person.starship.starshipID,
         Name: person.starship.name,   
         Length: person.starship.length,     
       }),
@@ -102,15 +102,14 @@ function showBooking(person){
         alert("you're in " + result.starshipID + " " + result.name);
         updatePerson(person, result);
         
-        $.ajax(url + "parkinglot/" + 4, {
+        $.ajax(url + "parkinglot/" + 5, {
         data: JSON.stringify({
-        IsOccupied: true,
-        starship: result
+        IsOccupied: true
         }),
         method: "PUT",
         contentType: "application/json",
-        success: function (results) {
-       alert("You have the parkinglot with id " + results.ParkinglotID + ".");
+          success: function (results) {
+          alert("You have the parkinglot with id " + results.ParkinglotID + ".");
       
       
     },

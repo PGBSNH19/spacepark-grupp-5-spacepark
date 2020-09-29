@@ -75,7 +75,7 @@ namespace SpaceParkBackend.Controllers
                 
                 if(await _parkinglotRepo.Save())
                 {
-                    return NoContent();
+                    return existingParkinglot;
                 }
                 return BadRequest();
             }

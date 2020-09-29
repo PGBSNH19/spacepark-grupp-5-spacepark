@@ -38,13 +38,13 @@ namespace SpaceParkBackend.Controllers
             return result;
         }
 
-        [HttpPost(Name = "AddPerson")]
+        [HttpPost]
         public async Task<ActionResult<Person>> PostPerson(Person person)
         {
             try
             {
                 var validatedPerson = APICaller.GetPerson(person.Name);
-                var validatedStarship = new Starship();                                           
+                var validatedStarship = new Starship();
 
                 if (validatedPerson != null)
                 {
@@ -53,26 +53,30 @@ namespace SpaceParkBackend.Controllers
                         validatedStarship = APICaller.GetStarship(validatedPerson.Starships[0]);
                     }
 
+                    validatedPerson.Starship = validatedStarship;
                     await _repository.Add(validatedPerson);
 
                     if (await _repository.Save())
                     {
-                        return Created($"/Person/{validatedPerson.PersonID }", new Person { Name = validatedPerson.Name, HasPaid = false, Starship = validatedStarship });
+                        return Ok(validatedPerson);
                     }
 
                     return BadRequest();
+
                 }
 
                 else
                 {
-                    return NoContent();
+                    return BadRequest();
                 }
+
             }
 
-            catch (Exception e)
+            catch (Exception exception)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Database failure {e.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Database Failure: {exception.Message}");
             }
+            
         }
 
         [HttpPut("{id}")]
@@ -87,7 +91,7 @@ namespace SpaceParkBackend.Controllers
                     return NotFound($"Could not update Person. Person with id {id} was not found.");
                 }
 
-                var personToUpdate = new Person { PersonID = person.PersonID, HasPaid = person.HasPaid };
+                var personToUpdate = new Person { PersonID = person.PersonID, HasPaid = person.HasPaid, Starship = person.Starship };
                 _repository.Update(personToUpdate);
 
                 return NoContent();

@@ -35,7 +35,6 @@ namespace SpaceParkBackend.Services
 
             else if (data.Results[0].Name == name)
             {
-              
                 return data.Results[0];
             }
 
