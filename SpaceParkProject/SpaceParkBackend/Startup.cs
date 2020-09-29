@@ -33,6 +33,13 @@ namespace SpaceParkBackend
             services.AddDbContext<SpaceparkContext>();
             services.AddControllers();
 
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+
             services.AddMvc(options => options.EnableEndpointRouting = false)
                 .SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
         }
@@ -47,6 +54,8 @@ namespace SpaceParkBackend
 
             app.UseHttpsRedirection();
 
+            app.UseCors("MyPolicy");
+
             app.UseRouting();
 
             app.UseAuthorization();
@@ -56,6 +65,7 @@ namespace SpaceParkBackend
                 endpoints.MapControllerRoute( name:"default", pattern:"{controller}/{action}/{id?}");
                 endpoints.MapControllers();
             });
+
             app.UseMvc();
         }
     }
