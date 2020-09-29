@@ -49,29 +49,34 @@ namespace SpaceParkBackend.Controllers
         }
 
         [HttpPut("{parkinglotID}")]
-        public async Task<ActionResult<Parkinglot>> UpdateParkinglots(int parkinglotID, Parkinglot parkinglot)
+        public async Task<ActionResult<Parkinglot>> UpdateParkinglots(int parkinglotID, Starship starship)
         {
             try
             {
                 var existingParkinglot = await _parkinglotRepo.GetParkinglotById(parkinglotID);
-
+               
                 if(existingParkinglot == null)
                 {
                     return NotFound($"There is no parkinglot with the ID : {parkinglotID}");
                 }
 
-                _parkinglotRepo.Update(parkinglot);
+                existingParkinglot.IsOccupied = true;
+                existingParkinglot.Starship = starship;
+                existingParkinglot.StarshipID = starship.StarshipID;
+                _parkinglotRepo.Update(existingParkinglot);
+                
 
                 if(await _parkinglotRepo.Save())
                 {
                     return NoContent();
                 }
+                return BadRequest();
             }
             catch (Exception e)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Database Failure: {e.Message}");
             }
-            return BadRequest();
+          
         }
     }
 }

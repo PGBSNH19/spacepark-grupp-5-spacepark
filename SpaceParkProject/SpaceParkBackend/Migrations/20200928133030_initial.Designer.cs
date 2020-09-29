@@ -10,7 +10,7 @@ using SpaceParkBackend.Database;
 namespace SpaceParkBackend.Migrations
 {
     [DbContext(typeof(SpaceparkContext))]
-    [Migration("20200921113337_initial")]
+    [Migration("20200928133030_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,8 +42,6 @@ namespace SpaceParkBackend.Migrations
 
                     b.HasKey("ParkinglotID");
 
-                    b.HasIndex("StarshipID");
-
                     b.ToTable("Parkinglots");
 
                     b.HasData(
@@ -51,9 +49,43 @@ namespace SpaceParkBackend.Migrations
                         {
                             ParkinglotID = 1,
                             Cost = 500,
-                            IsOccupied = true,
-                            Length = 36,
-                            StarshipID = 1
+                            IsOccupied = false,
+                            Length = 10
+                        },
+                        new
+                        {
+                            ParkinglotID = 2,
+                            Cost = 500,
+                            IsOccupied = false,
+                            Length = 20
+                        },
+                        new
+                        {
+                            ParkinglotID = 3,
+                            Cost = 500,
+                            IsOccupied = false,
+                            Length = 30
+                        },
+                        new
+                        {
+                            ParkinglotID = 4,
+                            Cost = 500,
+                            IsOccupied = false,
+                            Length = 30
+                        },
+                        new
+                        {
+                            ParkinglotID = 5,
+                            Cost = 500,
+                            IsOccupied = false,
+                            Length = 50
+                        },
+                        new
+                        {
+                            ParkinglotID = 6,
+                            Cost = 500,
+                            IsOccupied = false,
+                            Length = 100
                         });
                 });
 
@@ -70,21 +102,9 @@ namespace SpaceParkBackend.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("StarshipID")
-                        .HasColumnType("int");
-
                     b.HasKey("PersonID");
 
                     b.ToTable("Persons");
-
-                    b.HasData(
-                        new
-                        {
-                            PersonID = 1,
-                            HasPaid = false,
-                            Name = "Luke Skywalker",
-                            StarshipID = 1
-                        });
                 });
 
             modelBuilder.Entity("SpaceParkBackend.Models.Starship", b =>
@@ -103,21 +123,6 @@ namespace SpaceParkBackend.Migrations
                     b.HasKey("StarshipID");
 
                     b.ToTable("Starships");
-
-                    b.HasData(
-                        new
-                        {
-                            StarshipID = 1,
-                            Length = 32,
-                            Name = "Sand Crawler"
-                        });
-                });
-
-            modelBuilder.Entity("SpaceParkBackend.Models.Parkinglot", b =>
-                {
-                    b.HasOne("SpaceParkBackend.Models.Starship", "Starship")
-                        .WithMany()
-                        .HasForeignKey("StarshipID");
                 });
 #pragma warning restore 612, 618
         }

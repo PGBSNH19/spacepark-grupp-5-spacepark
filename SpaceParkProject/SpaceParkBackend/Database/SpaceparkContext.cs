@@ -33,30 +33,56 @@ namespace SpaceParkBackend.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Starship>()
-                .HasData(new
-                {
-                    StarshipID = 1,
-                    Length = 32,
-                    Name = "Sand Crawler"
-                });
-            modelBuilder.Entity<Parkinglot>()
+                      
+                modelBuilder.Entity<Parkinglot>()
                 .HasData(new
                 {
                     ParkinglotID = 1,
                     Cost = 500,
-                    Length = 36,
-                    IsOccupied = true,
-                    StarshipID = 1
+                    Length = 10,
+                    IsOccupied = false                    
                 });
-            modelBuilder.Entity<Person>()
-                .HasData(new
-                {
-                    PersonID = 1,
-                    Name = "Luke Skywalker",
-                    HasPaid = false,
-                    StarshipID = 1                    
-                });
+            modelBuilder.Entity<Parkinglot>()
+               .HasData(new
+               {
+                   ParkinglotID = 2,
+                   Cost = 500,
+                   Length = 20,
+                   IsOccupied = false
+               });
+            modelBuilder.Entity<Parkinglot>()
+               .HasData(new
+               {
+                   ParkinglotID = 3,
+                   Cost = 500,
+                   Length = 30,
+                   IsOccupied = false
+               });
+            modelBuilder.Entity<Parkinglot>()
+               .HasData(new
+               {
+                   ParkinglotID = 4,
+                   Cost = 500,
+                   Length = 30,
+                   IsOccupied = false
+               });
+            modelBuilder.Entity<Parkinglot>()
+               .HasData(new
+               {
+                   ParkinglotID = 5,
+                   Cost = 500,
+                   Length = 50,
+                   IsOccupied = false
+               });
+            modelBuilder.Entity<Parkinglot>()
+               .HasData(new
+               {
+                   ParkinglotID = 6,
+                   Cost = 500,
+                   Length = 100,
+                   IsOccupied = false
+               });
+
         }
     }
 }

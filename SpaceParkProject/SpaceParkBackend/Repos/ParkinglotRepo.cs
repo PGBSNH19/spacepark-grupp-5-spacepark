@@ -36,7 +36,7 @@ namespace SpaceParkBackend.Repos
         {
             _logger.LogInformation("Getting Parkinglot with specific ID");
 
-            var query = _context.Parkinglots.Where(i => i.ParkinglotID == id);
+            var query = _context.Parkinglots.Where(i => i.ParkinglotID == id && i.IsOccupied == false);
             
             return await query.FirstOrDefaultAsync();
         }
