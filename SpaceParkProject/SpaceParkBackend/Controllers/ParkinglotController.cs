@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using SpaceParkBackend.Models;
 using SpaceParkBackend.Repos;
 using System;
@@ -14,10 +15,12 @@ namespace SpaceParkBackend.Controllers
     public class ParkinglotController : ControllerBase
     {
         private readonly IParkinglotRepo _parkinglotRepo;
+        private readonly ILogger _logger;
         
-        public ParkinglotController(IParkinglotRepo parkinglotRepo)
+        public ParkinglotController(IParkinglotRepo parkinglotRepo, ILogger<ParkinglotController> logger)
         {
             _parkinglotRepo = parkinglotRepo;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -28,10 +31,18 @@ namespace SpaceParkBackend.Controllers
                 var results = await _parkinglotRepo.GetAvailableParkingLots();
 
                 if (!results.Any())
+                {
+                    _logger.LogInformation("Cannot get any parkinglots from the database");
                     return NotFound("Its Full B*TCH (Shoot em Down)");
+                }
+
 
                 else
+                {
+                    _logger.LogInformation("Getting parkinglots from the database");
                     return Ok(results);
+                }
+                    
             }
             catch (Exception e)
             {
@@ -44,6 +55,7 @@ namespace SpaceParkBackend.Controllers
         {
             try
             {
+                _logger.LogInformation($"Getting parkinglot with id {id}");
                 var result = await _parkinglotRepo.GetParkinglotById(id);
                 return Ok(result);
             }
@@ -58,7 +70,6 @@ namespace SpaceParkBackend.Controllers
         {
             try
             {
-
                 var existingParkinglot = await _parkinglotRepo.GetParkinglotById(parkinglotID);
                
                 if(existingParkinglot != null)
@@ -74,8 +85,11 @@ namespace SpaceParkBackend.Controllers
                             await _parkinglotRepo.Save();
                         }
                         else
+                        {
                             return BadRequest("Whoops! Your starship was too big for the parkinglot!");
+                        }
                     }
+
                     else
                     {
                         existingParkinglot.IsOccupied = parkinglot.IsOccupied;
@@ -88,6 +102,7 @@ namespace SpaceParkBackend.Controllers
                 else
                     return NotFound($"There is no parkinglot with the ID : {parkinglotID}");
 
+                _logger.LogInformation($"Updating parkinglot with id {existingParkinglot.ParkinglotID} in the database");
                 return NoContent();
             }
             catch (Exception e)

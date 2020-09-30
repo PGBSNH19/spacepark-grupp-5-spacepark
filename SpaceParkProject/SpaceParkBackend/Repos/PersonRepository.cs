@@ -21,8 +21,8 @@ namespace SpaceParkBackend.Repos
 
         public async Task<IList<Person>> GetAllPersons(string name)
         {
-            var persons = _context.Persons;
-
+            _logger.LogInformation("Getting all persons");
+            var persons = _context.Persons; 
             if(string.IsNullOrEmpty(name) == false)
             {
                 return persons.Where(p => p.Name == name).ToList();
@@ -33,6 +33,7 @@ namespace SpaceParkBackend.Repos
 
         public async Task<Person> GetPersonById(int id)
         {
+            _logger.LogInformation($"Getting a person with a specific id {id}");
             var person = await _context.Persons.SingleOrDefaultAsync(p => p.PersonID == id);
 
             return person;
