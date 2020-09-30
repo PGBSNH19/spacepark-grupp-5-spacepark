@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SpaceParkBackend.Database;
 using SpaceParkBackend.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,9 +26,11 @@ namespace SpaceParkBackend.Repos
         public async Task<Starship> GetStarshipById(int id)
         {
             _logger.LogInformation("Getting starship by their id.");
-            IQueryable<Starship> query = _context.Starships.Where(starship => starship.StarshipID == id);
+           
+            var starship = await _context.Starships.SingleOrDefaultAsync(p => p.StarshipID == id);
 
-            return await query.FirstOrDefaultAsync();
+            return starship;
+            
         }
     }
 }

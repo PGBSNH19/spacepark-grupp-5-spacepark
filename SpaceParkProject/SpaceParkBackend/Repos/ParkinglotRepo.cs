@@ -23,7 +23,7 @@ namespace SpaceParkBackend.Repos
             
             var parkingSpaces = await _context.Parkinglots.Where(p => p.IsOccupied == false).ToListAsync();
 
-            if (parkingSpaces.Count < 1)
+            if (!parkingSpaces.Any())
             {
                 _logger.LogInformation("Its Full B*TCH (Shoot em Down)");
                 return parkingSpaces;

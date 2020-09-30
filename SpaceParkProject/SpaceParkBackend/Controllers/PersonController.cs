@@ -38,19 +38,44 @@ namespace SpaceParkBackend.Controllers
             return result;
         }
 
+        [HttpGet("{name}")]
+        public async Task<ActionResult<Person>> ValidatePerson(string name)
+        {
+            var personsFromRepo = await _repository.GetAllPersons();
+            foreach (var p in personsFromRepo)
+            {
+                if (p.Name == name)
+                    return Ok(p);
+            }
+
+            return BadRequest();
+        }
+
         [HttpPost]
         public async Task<ActionResult<Person>> PostPerson(Person person)
         {
             try
             {
+                var personsFromRepo = await _repository.GetAllPersons();
+                foreach (var p in personsFromRepo)
+                {
+                    if (p.Name == person.Name)
+                        return Unauthorized($"You are already parked here, {person.Name}!");
+                }
+
                 var validatedPerson = APICaller.GetPerson(person.Name);
                 var validatedStarship = new Starship();
 
                 if (validatedPerson != null)
                 {
-                    if (validatedPerson.Starships != null)
+                    if (validatedPerson.Starships.Count != 0)
                     {
                         validatedStarship = APICaller.GetStarship(validatedPerson.Starships[0]);
+                    }
+
+                    else
+                    {
+                        validatedStarship = APICaller.GetStarship("https://swapi.dev/api/starships/12/");
                     }
 
                     validatedPerson.Starship = validatedStarship;
@@ -86,13 +111,21 @@ namespace SpaceParkBackend.Controllers
             {
                 var personFromRepo = await _repository.GetPersonById(id);
 
-                if (personFromRepo == null)
+                if (personFromRepo != null)
+                {
+                    personFromRepo.Name = person.Name;
+                    personFromRepo.PersonID = person.PersonID;
+                    personFromRepo.HasPaid = person.HasPaid;
+                    personFromRepo.Starship = person.Starship;
+
+                    _repository.Update(personFromRepo);
+                    await _repository.Save();
+                }
+
+                else
                 {
                     return NotFound($"Could not update Person. Person with id {id} was not found.");
                 }
-
-                var personToUpdate = new Person { PersonID = person.PersonID, HasPaid = person.HasPaid, Starship = person.Starship };
-                _repository.Update(personToUpdate);
 
                 return NoContent();
             }
@@ -103,31 +136,28 @@ namespace SpaceParkBackend.Controllers
             }                     
         }
 
-        [HttpDelete("{id}", Name = "DeletePerson")]
-        public async Task<ActionResult> DeletePerson(int id)
+        [HttpDelete(Name = "DeletePerson")]
+        public async Task<ActionResult> DeletePerson(Person person)
         {
             try
             {
-                var visitorToDelete = await _repository.GetPersonById(id);
-
-                if(visitorToDelete == null)
+                var personsFromRepo = await _repository.GetAllPersons();
+                foreach (var p in personsFromRepo)
                 {
-                    return NotFound($"Could not find a person with the id {id}");
-                }
+                    if (p.Name == person.Name)
+                    {
+                        _repository.Delete(p);
+                        await _repository.Save();
 
-                _repository.Delete(visitorToDelete);
-
-                if(await _repository.Save())
-                {
-                    return NoContent();
+                        return NoContent();
+                    }
                 }
+                return NotFound($"You are not parked here, {person.Name}!");
             }
             catch (Exception e)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Databases Failure: {e.Message}");
             }
-
-            return BadRequest();
         }
     }
 }
