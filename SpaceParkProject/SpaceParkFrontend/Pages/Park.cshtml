@@ -7,16 +7,16 @@
 <div class="text-center">
     <h1 class="titleText">Welcome to the vip Starwars SpacePark</h1>
 </div>
-
-<div id="visitorInformation">
-  <input id="visitorName" type="text" placeholder="Type your name...">
-  <button id="postInfo">Proceed</button>
+<div class="wrapper">
+    <input class="visitorName" id="visitorName" type="text" placeholder="Type your name...">
+      <br>
+    <h1 id="parkingInstructions" class="titleText">Please choose a parkinglot below</h1>
+  <div id="parkinglotsContainer">
+    <ul id="lots"></ul>
+      <br>
+    <ul id="lotsInfo"></ul>
+  </div>
+    <button class="button" id="postInfo">Proceed to park</button>
+      <br>
+  <a href="/"><button class="button">Go Back To Home</button></a>
 </div>
-
-
- <div id="wrapper">
-        <div id="container">
-          <ul id="lots"></ul>
-        </div>
-        <a href="/"><button class="button">Go Back To Home</button></a>
-    </div>
