@@ -6,15 +6,47 @@
 var url = "https://localhost:5001/";
 var person;
 var starship;
-var parkinglotID = 5;
+var parkinglotID;
 
 
 $(document).ready(function () {
+  getFreeParkinglots();
   $("#postInfo").click(async function () {
     var inputName = $("#visitorName").val();
     validateAndPostPerson(inputName);
   });
 });
+
+
+
+function getFreeParkinglots() {
+  $.ajax(url + "parkinglot", {
+    data: JSON.stringify({
+    }),
+    method: "GET",
+    contentType: "application/json",
+    success: function (results) {
+      appendLots(results);
+    },
+    error: function (jqXHR) {
+      //$("#visitorInformation").innerHTML.replace('<p>ITS FULL</p>')
+      document.getElementById("visitorInformation").innerHTML = "Sorry It's Full!";
+      alert("Error: " + jqXHR.responseText);
+    }
+  });
+}
+function appendLots(parkingLots) {
+  parkingLots.forEach(lot => {
+    $('#lots').append("<li class='lot' id='" + lot.parkinglotID + "' onClick='parkTheStarship(this.id)'>Parkinglot: '" + lot.parkinglotID + "', Length: '" + lot.length + "'</li>");
+  });
+}
+
+function parkTheStarship(choosenParkinglotID) {
+  parkinglotID = choosenParkinglotID
+  alert("You have choosen to park on parkinglot with ID: " + parkinglotID);
+}
+
+
 
 function validateAndPostPerson(inputName) {
   $.ajax(url + "person", {
@@ -42,6 +74,7 @@ function addStarshipToParkinglot(parkinglotID, starshipToPark) {
     contentType: "application/json",
     success: function () {
       alert("Your beautiful " + starshipToPark.name + " is now parked on the parkinglot with ID: " + parkinglotID + ".");
+      document.location.reload();
     },
     error: function (jqXHR) { alert("Error: " + jqXHR.responseText); }
   });
@@ -104,7 +137,7 @@ function DeleteLeavingStarship(starship) {
     method: "DELETE",
     contentType: "application/json",
     success: function () {
-      alert("You have payed the parking fee of 500 space credits. Goodbye and safe travels, " + person.name + ".");
+      alert("You have payed the parking fee of 500 space credits. Goodbye and safe travels.");
       //DeleteLeavingPerson(person)
     },
     error: function (jqXHR) { alert("Error: " + jqXHR.responseText); }

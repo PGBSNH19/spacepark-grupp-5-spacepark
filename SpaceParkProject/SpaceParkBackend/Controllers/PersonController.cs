@@ -68,9 +68,14 @@ namespace SpaceParkBackend.Controllers
 
                 if (validatedPerson != null)
                 {
-                    if (validatedPerson.Starships != null)
+                    if (validatedPerson.Starships.Count != 0)
                     {
                         validatedStarship = APICaller.GetStarship(validatedPerson.Starships[0]);
+                    }
+
+                    else
+                    {
+                        validatedStarship = APICaller.GetStarship("https://swapi.dev/api/starships/12/");
                     }
 
                     validatedPerson.Starship = validatedStarship;

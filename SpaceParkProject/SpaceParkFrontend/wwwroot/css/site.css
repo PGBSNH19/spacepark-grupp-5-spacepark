@@ -14,6 +14,7 @@ body {
     background-image: url("/images/backgrounds.jpg");
     background-repeat: no-repeat;
     background-attachment: fixed;
+    color: aliceblue;
 }
 .container {
     background-color: rgba(193, 66, 66, 0.1);
@@ -42,6 +43,7 @@ button.button {
     -webkit-transition: all 0.4s;
     -moz-transition: all 0.4s;
     transition: all 0.4s; 
+    color: black;
 }
 
 button.button:after{
@@ -80,4 +82,12 @@ button.button:hover {
     -moz-transition: all 0.4s;
     transition: all 0.4s;
     
+}
+
+ul {
+    list-style: none;
+}
+
+li:hover {
+    cursor: pointer;
 }

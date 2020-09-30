@@ -26,7 +26,12 @@ namespace SpaceParkBackend.Controllers
             try
             {
                 var results = await _parkinglotRepo.GetAvailableParkingLots();
-                return Ok(results);
+
+                if (!results.Any())
+                    return NotFound("Its Full B*TCH (Shoot em Down)");
+
+                else
+                    return Ok(results);
             }
             catch (Exception e)
             {
@@ -53,6 +58,7 @@ namespace SpaceParkBackend.Controllers
         {
             try
             {
+
                 var existingParkinglot = await _parkinglotRepo.GetParkinglotById(parkinglotID);
                
                 if(existingParkinglot != null)
