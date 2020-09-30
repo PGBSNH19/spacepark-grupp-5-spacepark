@@ -39,7 +39,7 @@ namespace SpaceParkBackend.Database
                 {
                     ParkinglotID = 1,
                     Cost = 500,
-                    Length = 10,
+                    Length = 20,
                     IsOccupied = false                    
                 });
             modelBuilder.Entity<Parkinglot>()
