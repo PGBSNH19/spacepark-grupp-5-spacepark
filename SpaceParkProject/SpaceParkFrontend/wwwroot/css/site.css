@@ -192,9 +192,13 @@ li:hover{
 li:hover + .lotInfo {
     display: block;
     color: rgb(0, 0, 0);
+    border-radius: 25px;
+    background-color: rgba(255, 255, 0, 0.705);
+    border: 2px solid rgb(17, 17, 17);
+    padding: 10px;
     font-size: 22px;
     font-weight: bold;
     position: absolute;
-    top: 480px;
+    top: 472px;
     left: 840px;
 }
