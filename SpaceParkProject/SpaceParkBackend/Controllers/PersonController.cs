@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using SpaceParkBackend.Models;
 using SpaceParkBackend.Repos;
 using SpaceParkBackend.Services;
@@ -16,16 +17,19 @@ namespace SpaceParkBackend.Controllers
     public class PersonController : ControllerBase
     {
         private readonly IPersonRepository _repository;
+        private readonly ILogger _logger;
 
-        public PersonController(IPersonRepository repository)
+        public PersonController(IPersonRepository repository, ILogger<PersonController> logger)
         {
             _repository = repository;
+            _logger = logger;
         }
 
         [HttpGet(Name = "GetAllPersons")]
         public async Task<IList<Person>> GetAllPersons([FromQuery]string name)
         {
             var results = await _repository.GetAllPersons(name);
+            _logger.LogInformation("Getting all persons from database");
 
             return results;
         }
@@ -34,22 +38,10 @@ namespace SpaceParkBackend.Controllers
         public async Task<Person> GetPerson(int id)
         {
             var result = await _repository.GetPersonById(id);
+            _logger.LogInformation($"Getting person from database with id {id}");
 
             return result;
         }
-
-        //[HttpGet("{name}")]
-        //public async Task<Person> ValidatePerson(string name)
-        //{
-        //    var personsFromRepo = await _repository.GetAllPersons();
-        //    foreach (var p in personsFromRepo)
-        //    {
-        //        if (p.Name == name)
-        //            return p;
-        //    }
-
-        //    return null;
-        //}
 
         [HttpPost]
         public async Task<ActionResult<Person>> PostPerson(Person person)
@@ -60,7 +52,10 @@ namespace SpaceParkBackend.Controllers
                 foreach (var p in personsFromRepo)
                 {
                     if (p.Name == person.Name)
-                        return Unauthorized($"You are already parked here, {person.Name}!");
+                    {
+                        _logger.LogInformation($"A person with the name {person.Name}, already exists in the database. A person cannot be posted twice.");
+                        return Unauthorized($"You are already parked here, {person.Name}!"); 
+                    }                  
                 }
 
                 var validatedPerson = APICaller.GetPerson(person.Name);
@@ -71,11 +66,13 @@ namespace SpaceParkBackend.Controllers
                     if (validatedPerson.Starships.Count != 0)
                     {
                         validatedStarship = APICaller.GetStarship(validatedPerson.Starships[0]);
+                        _logger.LogInformation($"{validatedPerson.Name} got the starship {validatedStarship.Name}");
                     }
 
                     else
                     {
                         validatedStarship = APICaller.GetStarship("https://swapi.dev/api/starships/12/");
+                        _logger.LogInformation($"The person who entered did not have a starship of their own. Default ship {validatedStarship.Name} was provided.");
                     }
 
                     validatedPerson.Starship = validatedStarship;
@@ -83,6 +80,7 @@ namespace SpaceParkBackend.Controllers
 
                     if (await _repository.Save())
                     {
+                        _logger.LogInformation($"{validatedPerson.Name} was posted in the database.");
                         return Ok(validatedPerson);
                     }
 
@@ -92,6 +90,7 @@ namespace SpaceParkBackend.Controllers
 
                 else
                 {
+                    _logger.LogInformation($"The server cannot or will not process the request. This could be a client error (e.g., malformed request syntax, invalid request message framing, or deceptive request routing)");
                     return BadRequest();
                 }
 
@@ -99,6 +98,7 @@ namespace SpaceParkBackend.Controllers
 
             catch (Exception exception)
             {
+                _logger.LogInformation($"Something went wrong while posting a person to the database");
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Database Failure: {exception.Message}");
             }
             
@@ -124,6 +124,7 @@ namespace SpaceParkBackend.Controllers
 
                 else
                 {
+                    _logger.LogInformation($"Could not update Person. Person with id {id} was not found.");
                     return NotFound($"Could not update Person. Person with id {id} was not found.");
                 }
 
@@ -131,6 +132,7 @@ namespace SpaceParkBackend.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogInformation($"Something went wrong while uptading person with id {person.PersonID} in the database");
                 var result = new { Status = StatusCodes.Status500InternalServerError, Data = $"Failed to update the person. Exception thrown when attempting to update data in the database: {e.Message}" };
                 return this.StatusCode(StatusCodes.Status500InternalServerError, result);
             }                     
@@ -149,6 +151,7 @@ namespace SpaceParkBackend.Controllers
                         _repository.Delete(p);
                         await _repository.Save();
 
+                        _logger.LogInformation($"Deleting {person.Name} from the database.");
                         return NoContent();
                     }
                 }
@@ -156,6 +159,7 @@ namespace SpaceParkBackend.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogInformation($"Something went wrong while deleting person with id {person.PersonID} in the database");
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Databases Failure: {e.Message}");
             }
         }

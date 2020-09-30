@@ -13,9 +13,9 @@ namespace SpaceParkBackend.Services
         public string StarshipURL { get; set; }
 
         private static readonly RestClient client = new RestClient("https://swapi.dev/api/");
-
+        
         public static async Task<IRestResponse> GetPersonData(string name)
-        {
+        {           
             var theName = Uri.EscapeUriString(name);
             var request = new RestRequest($"people/?search={theName}", DataFormat.Json);
             var response = client.ExecuteAsync<SwapiPersonResponse>(request);
