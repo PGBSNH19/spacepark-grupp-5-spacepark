@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SpaceParkBackend.Database;
 using SpaceParkBackend.Models;
@@ -14,6 +15,7 @@ namespace SpaceParkBackend.Repos
         
         public PersonRepository(SpaceparkContext spaceContext, ILogger<Repository> logger) : base (spaceContext, logger)
         {
+            spaceContext.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
 
         }
 

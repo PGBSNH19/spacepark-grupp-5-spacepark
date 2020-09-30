@@ -25,13 +25,15 @@ namespace SpaceParkBackend.Controllers
             var results = await _starshipRepository.GetAllStarships();
             try
             {
-                if (results.Count <= 0 || results == null)
+                if (results.Count > 0 || results != null)
                 {
-                    return NotFound();
+                    return Ok(results);
+
                 }
                 else
                 {
-                    return Ok();
+                    return NotFound();
+
                 }
             }
             catch (Exception exception)
@@ -46,13 +48,14 @@ namespace SpaceParkBackend.Controllers
             var result = await _starshipRepository.GetStarshipById(id);
             try
             {
-                if (result == null)
+                if (result != null)
                 {
-                    return NotFound();
+                    return result;
                 }
                 else
                 {
-                    return Ok();
+                    return NotFound();
+
                 }
             }
             catch (Exception exception)
@@ -80,6 +83,35 @@ namespace SpaceParkBackend.Controllers
             catch (Exception exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Database Failure: {exception.Message}");
+            }
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Starship>> UpdateStarship(int id, Starship starship)
+        {
+            try
+            {
+                var starshipFromRepo = await _starshipRepository.GetStarshipById(id);
+
+                if (starshipFromRepo != null)
+                {
+                    starshipFromRepo.ParkinglotID = starship.ParkinglotID;
+
+                    _starshipRepository.Update(starshipFromRepo);
+                    await _starshipRepository.Save();
+                }
+
+                else
+                {
+                    return NotFound($"Could not update Person. Person with id {id} was not found.");
+                }
+
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                var result = new { Status = StatusCodes.Status500InternalServerError, Data = $"Failed to update the person. Exception thrown when attempting to update data in the database: {e.Message}" };
+                return this.StatusCode(StatusCodes.Status500InternalServerError, result);
             }
         }
 

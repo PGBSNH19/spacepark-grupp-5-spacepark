@@ -49,35 +49,40 @@ namespace SpaceParkBackend.Controllers
         }
 
         [HttpPut("{parkinglotID}")]
-        public async Task<ActionResult<Parkinglot>> UpdateParkinglots(int parkinglotID, Starship starship)
+        public async Task<ActionResult<Parkinglot>> UpdateParkinglots(int parkinglotID, Parkinglot parkinglot)
         {
             try
             {
                 var existingParkinglot = await _parkinglotRepo.GetParkinglotById(parkinglotID);
                
-                if(existingParkinglot == null)
+                if(existingParkinglot != null)
                 {
-                    return NotFound($"There is no parkinglot with the ID : {parkinglotID}");
-                }
+                    if (parkinglot.Starship != null)
+                    {
+                        if (existingParkinglot.Length > parkinglot.Starship.Length)
+                        {
+                            existingParkinglot.IsOccupied = parkinglot.IsOccupied;
+                            existingParkinglot.Starship = parkinglot.Starship;
 
-                if(existingParkinglot.IsOccupied == true)
-                {
-                    existingParkinglot.IsOccupied = false;                  
-                    existingParkinglot.Starship = null;
+                            _parkinglotRepo.Update(existingParkinglot);
+                            await _parkinglotRepo.Save();
+                        }
+                        else
+                            return BadRequest("Whoops! Your starship was too big for the parkinglot!");
+                    }
+                    else
+                    {
+                        existingParkinglot.IsOccupied = parkinglot.IsOccupied;
+                        existingParkinglot.Starship = null;
+
+                        _parkinglotRepo.Update(existingParkinglot);
+                        await _parkinglotRepo.Save();
+                    }
                 }
                 else
-                {
-                    existingParkinglot.IsOccupied = true;
-                    existingParkinglot.Starship = starship;                    
-                }
-                                
-                _parkinglotRepo.Update(existingParkinglot);
-                
-                if(await _parkinglotRepo.Save())
-                {
-                    return existingParkinglot;
-                }
-                return BadRequest();
+                    return NotFound($"There is no parkinglot with the ID : {parkinglotID}");
+
+                return NoContent();
             }
             catch (Exception e)
             {
