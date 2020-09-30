@@ -23,9 +23,9 @@ namespace SpaceParkBackend.Controllers
         }
 
         [HttpGet(Name = "GetAllPersons")]
-        public async Task<IList<Person>> GetAllPersons()
+        public async Task<IList<Person>> GetAllPersons([FromQuery]string name)
         {
-            var results = await _repository.GetAllPersons();
+            var results = await _repository.GetAllPersons(name);
 
             return results;
         }
@@ -38,25 +38,25 @@ namespace SpaceParkBackend.Controllers
             return result;
         }
 
-        [HttpGet("{name}")]
-        public async Task<ActionResult<Person>> ValidatePerson(string name)
-        {
-            var personsFromRepo = await _repository.GetAllPersons();
-            foreach (var p in personsFromRepo)
-            {
-                if (p.Name == name)
-                    return Ok(p);
-            }
+        //[HttpGet("{name}")]
+        //public async Task<Person> ValidatePerson(string name)
+        //{
+        //    var personsFromRepo = await _repository.GetAllPersons();
+        //    foreach (var p in personsFromRepo)
+        //    {
+        //        if (p.Name == name)
+        //            return p;
+        //    }
 
-            return BadRequest();
-        }
+        //    return null;
+        //}
 
         [HttpPost]
         public async Task<ActionResult<Person>> PostPerson(Person person)
         {
             try
             {
-                var personsFromRepo = await _repository.GetAllPersons();
+                var personsFromRepo = await _repository.GetAllPersons("");
                 foreach (var p in personsFromRepo)
                 {
                     if (p.Name == person.Name)
@@ -141,7 +141,7 @@ namespace SpaceParkBackend.Controllers
         {
             try
             {
-                var personsFromRepo = await _repository.GetAllPersons();
+                var personsFromRepo = await _repository.GetAllPersons("");
                 foreach (var p in personsFromRepo)
                 {
                     if (p.Name == person.Name)

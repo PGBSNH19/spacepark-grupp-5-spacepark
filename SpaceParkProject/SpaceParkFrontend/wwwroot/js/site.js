@@ -89,7 +89,7 @@ $(document).ready(function () {
 });
 
 function ValidateLeavingPerson(inputName) {
-  $.ajax(url + "person", {
+  $.ajax(url + "person/?name=" + inputName, {
     data: JSON.stringify({
       Name: inputName
     }),
@@ -106,7 +106,7 @@ function ValidateLeavingPerson(inputName) {
 
 function ValidateLeavingStarship(starshipID) {
   $.ajax({
-    url: url + "starships/" + starshipID,
+    url: url + "starship/" + starshipID,
     type: 'GET',
     success: function (result) {
       starship = result;
@@ -133,7 +133,7 @@ function LeaveParkinglot(starship) {
 }
 
 function DeleteLeavingStarship(starship) {
-  $.ajax(url + "starships/" + starship.starshipID, {
+  $.ajax(url + "starship/" + starship.starshipID, {
     method: "DELETE",
     contentType: "application/json",
     success: function () {

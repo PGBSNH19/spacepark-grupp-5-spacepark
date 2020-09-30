@@ -10,11 +10,11 @@ namespace SpaceParkBackend.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class StarshipsController : ControllerBase
+    public class StarshipController : ControllerBase
     {
         private readonly IStarshipRepository _starshipRepository;
 
-        public StarshipsController(IStarshipRepository starshipRepository)
+        public StarshipController(IStarshipRepository starshipRepository)
         {
             _starshipRepository = starshipRepository;
         }

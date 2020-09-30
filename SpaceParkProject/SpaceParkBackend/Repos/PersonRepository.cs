@@ -19,9 +19,14 @@ namespace SpaceParkBackend.Repos
 
         }
 
-        public async Task<IList<Person>> GetAllPersons()
+        public async Task<IList<Person>> GetAllPersons(string name)
         {
             var persons = _context.Persons;
+
+            if(string.IsNullOrEmpty(name) == false)
+            {
+                return persons.Where(p => p.Name == name).ToList();
+            }
 
             return await persons.ToListAsync();
         }
