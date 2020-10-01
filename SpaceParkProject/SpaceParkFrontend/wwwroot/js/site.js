@@ -29,7 +29,6 @@ function getFreeParkinglots() {
       appendLots(results);
     },
     error: function (jqXHR) {
-      //$("#visitorInformation").innerHTML.replace('<p>ITS FULL</p>')
       document.getElementById("visitorInformation").innerHTML = "Sorry It's Full!";
       alert("Error: " + jqXHR.responseText);
     }
@@ -37,7 +36,8 @@ function getFreeParkinglots() {
 }
 function appendLots(parkingLots) {
   parkingLots.forEach(lot => {
-    $('#lots').append("<li class='lot' id='" + lot.parkinglotID + "' onClick='parkTheStarship(this.id)'>Parkinglot: '" + lot.parkinglotID + "', Length: '" + lot.length + "'</li>");
+    $('#lots').append("<li class='lot' id='" + lot.parkinglotID + "' onClick='parkTheStarship(this.id)'>" + lot.parkinglotID + "</li>");
+    $('#lots').append("<div class='lotInfo' id='" + lot.parkinglotID + "'>Length: " + lot.length + " | Cost: " + lot.cost + "</li>");
   });
 }
 
@@ -138,25 +138,8 @@ function DeleteLeavingStarship(starship) {
     contentType: "application/json",
     success: function () {
       alert("You have payed the parking fee of 500 space credits. Goodbye and safe travels.");
-      //DeleteLeavingPerson(person)
+      document.location.reload();
     },
     error: function (jqXHR) { alert("Error: " + jqXHR.responseText); }
   });
 }
-
-//Don't need this funciton since person gets deleted when starship is deleted 
-
-// function DeleteLeavingPerson(person) {
-//   $.ajax(url + "person", {
-//     data: JSON.stringify({
-//       Name: person.name
-//     }),
-//     method: "DELETE",
-//     contentType: "application/json",
-//     success: function () {
-
-//       alert("Goodbye, " + person.name + ". See you soon!");
-//     },
-//     error: function (jqXHR, textStatus, errorThrown) { alert("Error: " + jqXHR.responseText); }
-//   });
-// }
