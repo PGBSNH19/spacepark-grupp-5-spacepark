@@ -3,7 +3,7 @@
 
 // Write your Javascript code.
 
-var url = "https://localhost:5001/";
+var url = "http://spaceparkbackend.northeurope.azurecontainer.io/";
 var person;
 var starship;
 var parkinglotID;
