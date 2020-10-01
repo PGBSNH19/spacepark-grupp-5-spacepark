@@ -14,6 +14,7 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  ConnectionStrings.DefaultConnection: $(DefaultConnection)
 
 jobs:
 - job: SpaceParkBackend
