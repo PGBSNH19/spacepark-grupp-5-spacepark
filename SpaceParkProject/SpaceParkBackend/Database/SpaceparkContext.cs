@@ -46,7 +46,7 @@ namespace SpaceParkBackend.Database
                .HasData(new
                {
                    ParkinglotID = 2,
-                   Cost = 1000,
+                   Cost = 500,
                    Length = 20,
                    IsOccupied = false
                });
@@ -54,7 +54,7 @@ namespace SpaceParkBackend.Database
                .HasData(new
                {
                    ParkinglotID = 3,
-                   Cost = 1500,
+                   Cost = 500,
                    Length = 30,
                    IsOccupied = false
                });
