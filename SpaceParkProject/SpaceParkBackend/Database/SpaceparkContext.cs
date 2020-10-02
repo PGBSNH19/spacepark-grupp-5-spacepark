@@ -28,7 +28,7 @@ namespace SpaceParkBackend.Database
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetConnectionString("DefaultConnection"));
+            optionsBuilder.UseSqlServer(new ConfigurationBuilder().AddJsonFile("appsettings.json").AddJsonFile("appsettings.dev.json").Build().GetConnectionString("DefaultConnection"));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
