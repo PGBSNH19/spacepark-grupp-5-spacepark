@@ -23,7 +23,7 @@ jobs:
   - task: DotNetCoreCLI@2
     inputs:
       command: 'test'
-      projects: '$(Build.SourcesDirectory)**/*Tests/*.csproj'
+      projects: '$(Build.SourcesDirectory)**/SpacePark.Tests/SpacePark.Tests.csproj'
       arguments: '$(BuildConfiguration)'
       testRunTitle: 'Run tests'
 
