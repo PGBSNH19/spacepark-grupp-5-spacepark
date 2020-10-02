@@ -18,6 +18,15 @@ variables:
   appsettingsfile: appsettings.json
 
 jobs:
+- job: Test   
+  steps: 
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'test'
+      projects: '**/SpacePark.Tests/SpacePark.Tests.csproj'
+      arguments: '--configuration $(BuildConfiguration)'
+      testRunTitle: 'Run tests'
+
 - job: SpaceParkBackend
   steps:
   - task: FileTransform@2
@@ -25,7 +34,7 @@ jobs:
     inputs:
       folderPath: '$(System.DefaultWorkingDirectory)/**/'
       xmlTransformationRules: ''
-      jsonTargetFiles: 'SpaceParkProject/SpaceParkBackend/$(appsettingsfile)'
+      jsonTargetFiles: 'SpaceParkProject/SpaceParkBackend/$(appsettingsfile)'     
   - task: Docker@2
     inputs:
       containerRegistry: 'DockerSpacePark'
