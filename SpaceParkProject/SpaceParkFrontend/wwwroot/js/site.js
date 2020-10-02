@@ -98,12 +98,15 @@ function ValidateLeavingPerson(inputName) {
     method: "GET",
     contentType: "application/json",
     success: function (result) {
+      if(result[0] != 0){
       person = result[0];
       alert("Found " + inputName + " in the parking.");
       ValidateLeavingStarship(person.starshipID);
-    },
-    error: function (jqXHR) { alert("Error: Are you an imposter??? We cant find you in our system!!!!" ); 
-    console.log("Error: " + jqXHR.responseText) }
+    }
+    else {
+     alert("Error: Are you an imposter??? We cant find you in our system!!!!" ); 
+     console.log("Error: " + jqXHR.responseText) }
+    }
   });
 }
 
