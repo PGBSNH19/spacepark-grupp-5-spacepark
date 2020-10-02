@@ -30,7 +30,7 @@ function getFreeParkinglots() {
     },
     error: function (jqXHR) {
       document.getElementById("visitorInformation").innerHTML = "Sorry It's Full!";
-      alert("Error: " + jqXHR.responseText);
+      console.log("Error: " + jqXHR.responseText) 
     }
   });
 }
@@ -60,7 +60,8 @@ function validateAndPostPerson(inputName) {
       alert("Welcome to the SpacePark, dear " + results.name + ".");
       addStarshipToParkinglot(parkinglotID, person.starship);
     },
-    error: function (jqXHR) { alert("Error: " + jqXHR.responseText); }
+    error: function (jqXHR) { alert("Error: You are not part of the Star Wars Franchise, Better turn around or we will Fire!!!!");
+  console.log("Error: " + jqXHR.responseText) }
   });
 }
 
@@ -76,7 +77,8 @@ function addStarshipToParkinglot(parkinglotID, starshipToPark) {
       alert("Your beautiful " + starshipToPark.name + " is now parked on the parkinglot with ID: " + parkinglotID + ".");
       document.location.reload();
     },
-    error: function (jqXHR) { alert("Error: " + jqXHR.responseText); }
+    error: function (jqXHR) { alert("Error: Could not Park ");
+  console.log("Error: " + jqXHR.responseText) }
   });
 }
 
@@ -100,7 +102,8 @@ function ValidateLeavingPerson(inputName) {
       alert("Found " + inputName + " in the parking.");
       ValidateLeavingStarship(person.starshipID);
     },
-    error: function (jqXHR) { alert("Error: " + jqXHR.responseText); }
+    error: function (jqXHR) { alert("Error: Are you an imposter??? We cant find you in our system!!!!" ); 
+    console.log("Error: " + jqXHR.responseText) }
   });
 }
 
@@ -113,7 +116,8 @@ function ValidateLeavingStarship(starshipID) {
       alert("Found " + starship.name + " in the parkinglot with ID: " + starship.parkinglotID + ".");
       LeaveParkinglot(starship);
     },
-    error: function (jqXHR) { alert("Error: " + jqXHR.responseText); }
+    error: function (jqXHR) { alert("Error: We couldnt find your ship in the parkinglot, are you joking with us???" ); 
+    console.log("Error: " + jqXHR.responseText) }
   });
 }
 
@@ -128,7 +132,8 @@ function LeaveParkinglot(starship) {
       alert("We have now placed the ship outside the parking.");
       DeleteLeavingStarship(starship);
     },
-    error: function (jqXHR) { alert("Error: " + jqXHR.responseText); }
+    error: function (jqXHR) { alert("Error: We couldn´t move your ship, maybe one of your thrusters are flat???" ); 
+    console.log("Error: " + jqXHR.responseText) }
   });
 }
 
@@ -140,6 +145,7 @@ function DeleteLeavingStarship(starship) {
       alert("You have payed the parking fee of 500 space credits. Goodbye and safe travels.");
       document.location.reload();
     },
-    error: function (jqXHR) { alert("Error: " + jqXHR.responseText); }
+    error: function (jqXHR) { alert("Error: Either you dont have the cash or the spaceship is stuck in parkinglot. We will call our maintenance staff!!!" ); 
+    console.log("Error: " + jqXHR.responseText) }
   });
 }
