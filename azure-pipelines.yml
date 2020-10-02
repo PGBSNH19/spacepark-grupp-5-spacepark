@@ -15,10 +15,17 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   ConnectionStrings.DefaultConnection: $(DefaultConnection)
+  appsettingsfile: appsettings.json
 
 jobs:
 - job: SpaceParkBackend
   steps:
+  - task: FileTransform@2
+    displayName: "Transform Json"
+    inputs:
+      folderPath: '$(System.DefaultWorkingDirectory)/**/'
+      xmlTransformationRules: ''
+      jsonTargetFiles: 'SpaceparkProject/$(appsettingsfile)'
   - task: Docker@2
     inputs:
       containerRegistry: 'DockerSpacePark'
