@@ -98,7 +98,7 @@ function ValidateLeavingPerson(inputName) {
     method: "GET",
     contentType: "application/json",
     success: function (result) {
-      if(result[0] != 0){
+      if(result[0] != undefined){
       person = result[0];
       alert("Found " + inputName + " in the parking.");
       ValidateLeavingStarship(person.starshipID);
