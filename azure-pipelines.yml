@@ -24,7 +24,7 @@ jobs:
     inputs:
       command: 'test'
       projects: '$(Build.SourcesDirectory)**/SpacePark.Tests/SpacePark.Tests.csproj'
-      arguments: '$(BuildConfiguration)'
+      arguments: '--configuration $(BuildConfiguration)'
       testRunTitle: 'Run tests'
 
 - job: SpaceParkBackend
