@@ -82,7 +82,6 @@ namespace SpaceParkBackend.Database
                    Length = 100,
                    IsOccupied = false
                });
-
         }
     }
 }
