@@ -25,7 +25,7 @@ jobs:
     inputs:
       folderPath: '$(System.DefaultWorkingDirectory)/**/'
       xmlTransformationRules: ''
-      jsonTargetFiles: 'SpaceparkProject/SpaceParkBackend/$(appsettingsfile)'
+      jsonTargetFiles: 'SpaceParkProject/SpaceParkBackend/$(appsettingsfile)'
   - task: Docker@2
     inputs:
       containerRegistry: 'DockerSpacePark'
