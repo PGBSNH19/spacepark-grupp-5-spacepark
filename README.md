@@ -8,7 +8,6 @@ The application simulates a parking garage exclusively for known characters in t
 
 [Project blog](https://github.com/PGBSNH19/spacepark-grupp-5-spacepark/tree/master/Documentation/Blog/Index.md)
 
-
 <p align="center">
   <img width="300" src="https://pgbsnh19.github.io/molnapplikationer/assets/images/spacepark.jpg">
 </p>
