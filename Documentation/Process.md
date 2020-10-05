@@ -27,7 +27,7 @@ We created our database using Entity Framework Core through the "code first" pri
 In an early stage we created CRC cards for the models to make a choice about the structure of the database. 
 The relations is displayed in the image below.
 
-![](C:\Users\erifr\Documents\.NET utvecklare\Molnkurs\spacepark-grupp-5-spacepark\Images\DATABAS-RELATION-SPACE.jpg)
+![](*\Images\DATABAS-RELATION-SPACE.jpg)
 
 
 
