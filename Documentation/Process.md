@@ -27,10 +27,9 @@ We created our database using Entity Framework Core through the "code first" pri
 In an early stage we created CRC cards for the models to make a choice about the structure of the database. 
 The relations is displayed in the image below.
 
-![](Images\DATABAS-RELATION-SPACE.jpg)
-
-
-
+<p align="center">
+  <img width="700" src="https://media.discordapp.net/attachments/699253771074535456/762662537409331200/DATABAS-RELATION-SPACE.jpg?width=705&height=485">
+</p>
 
 
 The picture is somewhat misleading though. The only relationship between Starship and Parkinglot is the Foreign Key in Starships pointing on  ParkinglotID in Parkinglots. But in the Parkinglot model we have a property holding a starship-object. We realized that we could have used the attribute [NotMapped], but thats for the future. 
