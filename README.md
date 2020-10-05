@@ -4,6 +4,10 @@ This is a school project in which we have learned how to develop and get a proje
 
 The application simulates a parking garage exclusively for known characters in the Star Wars Universe.
 
+<p align="center">
+  <img width="300" src="https://pgbsnh19.github.io/molnapplikationer/assets/images/spacepark.jpg">
+</p>
+
 [Project documentation](https://github.com/PGBSNH19/spacepark-grupp-5-spacepark/tree/master/Documentation)
 
 [Project blog](https://github.com/PGBSNH19/spacepark-grupp-5-spacepark/tree/master/Documentation/Blog/Index.md)
